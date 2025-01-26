@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Register - Art Gallery</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .register-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/register-1.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .register-form {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-floating {
+            margin-bottom: 1rem;
+        }
+
+        .form-floating .form-control {
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Register Page Start -->
+    <div class="register-page">
+        <div class="register-form">
+            <a href="index.html" class="btn btn-sm btn-outline-primary mb-4">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </a>
+
+            <h2 class="text-center mb-4">Register</h2>
+            <form id="registerForm" method="post" action="registerdb.php">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="uname" name = "uname" placeholder="Username">
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="email" name = "email" placeholder="name@example.com">
+                    <label for="registerEmail">Email Address</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" name = "password" placeholder="Password">
+                    <label for="registerPassword">Create Password</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="confirmPassword" name = "confirmPassword" placeholder="Confirm Password">
+                    <label for="confirmPassword">Confirm Password</label>
+                </div>
+                <button type="submit" class="btn btn-primary register-btn">Register</button>
+                <div class="login-link">
+                    Already have an account? 
+                    <a href="login.html" class="text-primary">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Register Page End -->
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form Validation -->
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            // Perform form validation
+            const username = document.getElementById('uname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+    
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                event.preventDefault(); // Stop submission if validation fails
+                return;
+            }
+    
+            // Password length validation
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                event.preventDefault();
+                return;
+            }
+    
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                event.preventDefault();
+                return;
+            }
+    
+            // If everything is valid, let the form submit
+        });
+    </script>
+    
+</body>
+</html>
