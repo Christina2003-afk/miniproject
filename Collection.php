@@ -74,10 +74,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="index.php" class="nav-item nav-link">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
-                <a href="product.html" class="nav-item nav-link active">Products</a>
+                <a href="collection.php" class="nav-item nav-link active">Collection</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
@@ -105,7 +105,7 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-6 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center pt-5 pb-3">
-            <h1 class="display-4 text-white animated slideInDown mb-3">Products</h1>
+            <h1 class="display-4 text-white animated slideInDown mb-3">Collections</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
@@ -137,106 +137,326 @@
                     </div>
                 </div>
             </div>
+            <div class="category-box">
+                <label for="category">Choose a category:</label>
+                <select id="category" onchange="loadSubcategories()">
+                    <option value="">--Select Category--</option>
+                    <?php
+                    // Database connection
+                    include 'dbconfig.php';  // Make sure this path is correct
+                    
+                    // Add error reporting for debugging
+                    error_reporting(E_ALL);
+                    ini_set('display_errors', 1);
+                    
+                    // Fetch categories
+                    $sql = "SELECT category_id, category_name FROM categories";
+                    $result = $conn->query($sql);
+                    
+                    if ($result) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row['category_id'] . "'>" . htmlspecialchars($row['category_name']) . "</option>";
+                        }
+                    } else {
+                        echo "<!-- Error: " . $conn->error . " -->";
+                    }
+                    ?>
+                </select>
+
+                <div id="subcategory-container" style="margin-top: 10px;">
+                    <label for="subcategory">Choose a subcategory:</label>
+                    <select id="subcategory">
+                        <option value="">--Select Subcategory--</option>
+                        <?php
+                        if(isset($_GET['category_id'])) {
+                            $category_id = $_GET['category_id'];
+                            $sql = "SELECT subcategory_id, subcategory_name FROM subcategories WHERE category_id = ?";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("i", $category_id);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['subcategory_id'] . "'>" . htmlspecialchars($row['subcategory_name']) . "</option>";
+                            }
+                            $stmt->close();
+                        }
+                        $conn->close();
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gallery" id="gallery"></div>
+
+            <div id="products-container" class="row g-4">
+                <!-- Products will be loaded here dynamically -->
+            </div>
+
+            <script>
+                const gallery = document.getElementById('gallery');
+                const categorySelect = document.getElementById('category');
+
+                // Sample data for each category
+                const categoryData = {
+                    'traditional-art': [
+                        "img/art-1.jpeg",  // Replace with your local image path
+                        "img/Art-2.jpeg",
+                        "img/Art-4.jpg",  // Replace with your local image path
+                        "img/Art-5.jpg",
+                        "img/Art-6.jpg",  // Replace with your local image path
+                        "img/Art-7.jpg",
+                        "img/Art-8.jpg",  // Replace with your local image path
+                        "img/Art-9.jpg",
+                        "img/Art-10.jpg",  // Replace with your local image path
+                        "img/Art-11.jpg",
+                        "img/Art-12.jpg",  // Replace with your local image path
+                        "img/Art-13.jpg",
+                    ],
+                    'digital-art': [
+                        "img/painting-4.jpg",
+                        "img/painting-5.jpg",
+                        "img/painting-6.jpg",
+                        "img/painting-7.jpg",
+                        "img/painting-8.jpg",
+                        "img/painting-9.jpg",
+                        "img/painting-10.jpg",
+                        "img/painting-11.jpg",
+                        "img/painting-12.jpg",
+                        "img/painting-13.jpg",
+                        "img/painting-14.jpg",
+                        "img/painting-15.jpg",
+                        "img/painting-16.jpg",
+                    ],
+                    'sculpture': [
+                        "img/scul-1.jpg",
+                        "img/scul-2.jpg",
+                        "img/scul-3.jpg",
+                        "img/scul-4.jpg",
+                        "img/scul-5.jpg",
+                        "img/scul-6.jpg",
+                        "img/scul-7.jpg",
+                        "img/scul-8.jpg",
+                    ],
+                    'classic-art': [
+                        "img/classic-art-1.jpg",
+                        "img/classic-art-2.jpg",
+                        "img/classic-art-3.jpg",
+                        "img/classic-art-4.jpg",
+                        "img/classic-art-5.jpg",
+                        "img/classic-art-6.jpg",
+                    ],
+                };
+
+                // Function to display images based on category
+                function displayImages(category) {
+                    gallery.innerHTML = ""; // Clear existing images
+                    if (category && categoryData[category]) {
+                        categoryData[category].forEach((imageUrl) => {
+                            const img = document.createElement("img");
+                            img.src = imageUrl;
+                            gallery.appendChild(img);
+                        });
+                    }
+                }
+
+                // Event listener for category selection
+                categorySelect.addEventListener("change", (e) => {
+                    const selectedCategory = e.target.value;
+                    displayImages(selectedCategory);
+                });
+
+                function loadSubcategories() {
+                    const categorySelect = document.getElementById('category');
+                    const subcategoryContainer = document.getElementById('subcategory-container');
+                    const subcategorySelect = document.getElementById('subcategory');
+                    const selectedCategory = categorySelect.value;
+
+                    if (selectedCategory) {
+                        // Fetch subcategories using AJAX
+                        fetch('get_subcategories.php?category_id=' + selectedCategory)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('Received data:', data); // Debug log
+                                
+                                // Clear existing subcategories
+                                subcategorySelect.innerHTML = '<option value="">--Select Subcategory--</option>';
+
+                                // Add new subcategories
+                                data.forEach(sub => {
+                                    const option = document.createElement('option');
+                                    option.value = sub.subcategory_id;
+                                    option.textContent = sub.subcategory_name;
+                                    subcategorySelect.appendChild(option);
+                                });
+                                
+                                subcategoryContainer.style.display = 'block';
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Error loading subcategories');
+                            });
+                    } else {
+                        subcategoryContainer.style.display = 'none';
+                    }
+                }
+
+                // Debug: Log when the page loads
+                document.addEventListener('DOMContentLoaded', function() {
+                    console.log('Page loaded');
+                });
+
+                // Add new function to load products when subcategory is selected
+                document.getElementById('subcategory').addEventListener('change', function() {
+                    const subcategoryId = this.value;
+                    if (subcategoryId) {
+                        fetch('get_products.php?subcategory_id=' + subcategoryId)
+                            .then(response => response.json())
+                            .then(data => {
+                                const productsContainer = document.getElementById('products-container');
+                                productsContainer.innerHTML = ''; // Clear existing products
+                                
+                                if (data.length === 0) {
+                                    productsContainer.innerHTML = '<p class="text-center w-100">No products found in this category.</p>';
+                                    return;
+                                }
+                                
+                                data.forEach(product => {
+                                    const productHtml = `
+                                        <div class="col-lg-4 col-md-6">
+                                            <div class="store-item position-relative text-center">
+                                                <img class="img-fluid" src="${product.image_url}" alt="${product.product_name}">
+                                                <div class="p-4">
+                                                    <div class="text-center mb-3">
+                                                        <small class="fa fa-star text-primary"></small>
+                                                        <small class="fa fa-star text-primary"></small>
+                                                        <small class="fa fa-star text-primary"></small>
+                                                        <small class="fa fa-star text-primary"></small>
+                                                        <small class="fa fa-star text-primary"></small>
+                                                    </div>
+                                                    <h4 class="mb-3">${product.product_name}</h4>
+                                                    <p>${product.product_description}</p>
+                                                    <h4 class="text-primary">$${product.price.toFixed(2)}</h4>
+                                                    <div class="stock-info">Stock: ${product.stock_quantity}</div>
+                                                </div>
+                                                <div class="store-overlay">
+                                                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail</a>
+                                                    <button onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
+                                                            class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                    productsContainer.innerHTML += productHtml;
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                document.getElementById('products-container').innerHTML = 
+                                    '<p class="text-center w-100">Error loading products. Please try again.</p>';
+                            });
+                    } else {
+                        document.getElementById('products-container').innerHTML = '';
+                    }
+                });
+
+                // Add this new JavaScript function
+                function addToCart(product) {
+                    fetch('add_to_wishlist.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(product)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Product added to wishlist successfully!');
+                        } else {
+                            alert('Error adding product to wishlist: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error adding product to wishlist');
+                    });
+                }
+            </script>
             <style>
                 body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      text-align: center;
-    }
-    .category-box {
-      margin-bottom: 20px;
-    }
-    select {
-      padding: 10px;
-      font-size: 16px;
-    }
-    .gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .gallery img {
-      width: 300px;
-      height: 400px;
-      object-fit: cover;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      transition: transform 0.3s ease;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-    
-  </style>
-</head>
-<body>
-  <h1>Art Gallery</h1>
-  <div class="category-box">
-    <label for="category">Choose a category:</label>
-    <select id="category">
-      <option value="">--Select--</option>
-      <option value="art">Art</option>
-      <option value="painting">Painting</option>
-      <option value="sculpture">Sculpture</option>
-      <option value="classic-art">Classic Art</option>
-    </select>
-  </div>
-
-  <div class="gallery" id="gallery"></div>
-
-  <script>
-    const gallery = document.getElementById('gallery');
-    const categorySelect = document.getElementById('category');
-
-    // Sample data for each category
-    const categoryData = {
-  art: [
-    "img/art-1.jpeg",  // Replace with your local image path
-    "img/Art-2.jpeg",
-    "img/Art-4.jpg",  // Replace with your local image path
-    "img/Art-5.jpg",
-    "img/Art-6.jpg",  // Replace with your local image path
-    "img/Art-7.jpg",
-    "img/Art-8.jpg",  // Replace with your local image path
-    "img/Art-9.jpg",
-    "img/Art-10.jpg",  // Replace with your local image path
-    "img/Art-11.jpg",
-    "img/Art-12.jpg",  // Replace with your local image path
-    "img/Art-13.jpg",
-  ],
-  painting: [
-    "images/painting1.jpg",
-    "images/painting2.jpg",
-  ],
-  sculpture: [
-    "images/sculpture1.jpg",
-    "images/sculpture2.jpg",
-  ],
-  "classic-art": [
-    "images/classic-art1.jpg",
-    "images/classic-art2.jpg",
-  ],
-};
-
-    // Function to display images based on category
-    function displayImages(category) {
-      gallery.innerHTML = ""; // Clear existing images
-      if (category && categoryData[category]) {
-        categoryData[category].forEach((imageUrl) => {
-          const img = document.createElement("img");
-          img.src = imageUrl;
-          gallery.appendChild(img);
-        });
-      }
-    }
-
-    // Event listener for category selection
-    categorySelect.addEventListener("change", (e) => {
-      const selectedCategory = e.target.value;
-      displayImages(selectedCategory);
-    });
-  </script>
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    text-align: center;
+                }
+                .category-box {
+                    margin: 20px 0;
+                }
+                select {
+                    padding: 8px;
+                    margin: 5px 0;
+                    min-width: 200px;
+                    border-radius: 4px;
+                    border: 1px solid #ccc;
+                }
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                }
+                .gallery {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 20px;
+                }
+                .gallery img {
+                    width: 300px;
+                    height: 400px;
+                    object-fit: cover;
+                    border: 2px solid #ccc;
+                    border-radius: 10px;
+                    transition: transform 0.3s ease;
+                }
+                .gallery img:hover {
+                    transform: scale(1.05);
+                }
+                .store-item {
+                    background: #ffffff;
+                    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+                    transition: .5s;
+                    margin-bottom: 30px;
+                }
+                .store-item:hover {
+                    box-shadow: 0 0 45px rgba(0, 0, 0, .15);
+                }
+                .store-item img {
+                    width: 100%;
+                    height: 250px;
+                    object-fit: cover;
+                }
+                .store-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    background: rgba(0, 0, 0, .3);
+                    opacity: 0;
+                    transition: .5s;
+                }
+                .store-item:hover .store-overlay {
+                    opacity: 1;
+                }
+                .stock-info {
+                    color: #666;
+                    font-size: 0.9rem;
+                    margin-top: 10px;
+                }
             </style>
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <p class="text-primary text-uppercase mb-2">// Art collections</p>
@@ -408,7 +628,7 @@
                     &copy; <a href="#">Your Site Name</a>, All Right Reserved.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                    <!--/*** This template is free as long as you keep the footer author's credit link/attribution link/backlink. If you'd like to use the template without the footer author's credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                     Designed By <a href="https://htmlcodex.com">HTML Codex</a>
                     <br>Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
                 </div>

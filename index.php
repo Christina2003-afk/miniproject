@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-    <?php
+<?php
 session_start();
-$email = $_SESSION["email"];
+require_once 'dbconfig.php'; // Make sure this path is correct
+$email = isset($_SESSION["email"]) ? $_SESSION["email"] : null;
 // if(isset($email))
 // {
 //     ?>
@@ -34,6 +33,12 @@ $email = $_SESSION["email"];
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        .login-logo {
+            margin-bottom: 20px;
+            border-radius: 8px; /* Optional: if you want rounded corners */
+        }
+    </style>
 </head>
 
 <body>
@@ -72,18 +77,21 @@ $email = $_SESSION["email"];
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-            <h1 class="text-primary m-0">ART</h1>
+        <a href="index.php" class="navbar-brand ms-4 ms-lg-0">
+            <img src="img/logoart.png" alt="Pure Art Logo" height="60" 
+                 onerror="this.onerror=null; this.src='logoart.png';"
+                 style="max-width: 200px; object-fit: contain;">
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
+                <a href="index.php" class="nav-item nav-link active">Home</a>
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
-                <a href="Collection.html" class="nav-item nav-link">Collection</a>
+                <a href="Collection.php" class="nav-item nav-link">Collection</a>
+                <a href="Bidding.html" class="nav-item nav-link">Bidding </a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
@@ -93,7 +101,7 @@ $email = $_SESSION["email"];
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
-                <a href="login.html" class="nav-item nav-link">Login</a>  <!-- Add this line -->
+                
                 
             </div>
 
@@ -102,8 +110,47 @@ $email = $_SESSION["email"];
                     <i class="fa fa-phone text-primary"></i>
                 </div> -->
                 <div class="ps-3">
-                    <small class="text-primary mb-0"><a href = "logout.php"><?= htmlspecialchars($email) ?></a></small>
-                    <!-- <p class="text-light fs-5 mb-0">9072377787</p> -->
+                    <?php 
+                    if(isset($email)): 
+                        // Get wishlist count - only if user is logged in
+                        $wishlist_count = 0;
+                        try {
+                            $wishlist_query = "SELECT COUNT(*) as count FROM wishlist";
+                            $wishlist_result = $conn->query($wishlist_query);
+                            if ($wishlist_result && $row = $wishlist_result->fetch_assoc()) {
+                                $wishlist_count = $row['count'];
+                            }
+                        } catch (Exception $e) {
+                            // Handle any database errors silently
+                            error_log("Error fetching wishlist count: " . $e->getMessage());
+                        }
+                    ?>
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown">
+                                <?= htmlspecialchars($email) ?>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.php" class="dropdown-item">
+                                    <i class="fas fa-user me-2"></i>Profile
+                                </a>
+                                <a href="wishlist.php" class="dropdown-item">
+                                    <i class="fas fa-heart me-2"></i>Wishlist
+                                    <?php if($wishlist_count > 0): ?>
+                                        <span class="badge bg-primary ms-2"><?= $wishlist_count ?></span>
+                                    <?php endif; ?>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="logout.php" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                </a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <!-- Updated login button design -->
+                        <a href="login.html" class="btn btn-outline-light rounded-0">
+                            <i class="fa fa-user me-2"></i>Login
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -194,10 +241,10 @@ $email = $_SESSION["email"];
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="row img-twice position-relative h-100">
                         <div class="col-6">
-                            <img class="img-fluid rounded" src="img/about-1.jpg" alt="">
+                            <img class="img-fluid rounded" src="img/about1.jpg" alt="">
                         </div>
                         <div class="col-6 align-self-end">
-                            <img class="img-fluid rounded" src="img/about-2.jpg" alt="">
+                            <img class="img-fluid rounded" src="img/about2.jpg" alt="">
                         </div>
                     </div>
                 </div>
@@ -264,7 +311,7 @@ $email = $_SESSION["email"];
                             <span>Timeless beauty, eternal stories—classic art that transcends generations.</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/product-7.jpg" alt="">
+                            <img class="img-fluid" src="img/product-3.jpg" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href=""><i class="fa fa-eye text-primary"></i></a>
                             </div>
@@ -279,7 +326,7 @@ $email = $_SESSION["email"];
                             <span>Bold ideas, vibrant expressions—modern art redefining creativity.</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/product-2.jpg" alt="">
+                            <img class="img-fluid" src="img/product2.jpg" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href=""><i class="fa fa-eye text-primary"></i></a>
                             </div>
@@ -494,7 +541,7 @@ $email = $_SESSION["email"];
                             
                         </div>
                     </div>
-                    <p class="mb-0">I’ve purchased several pieces here and I couldn’t be happier. The team at this gallery is incredibly professional, and I always feel confident in the authenticity and quality of the artwork. A trusted name in the art community.</p>
+                    <p class="mb-0">I've purchased several pieces here and I couldn't be happier. The team at this gallery is incredibly professional, and I always feel confident in the authenticity and quality of the artwork. A trusted name in the art community.</p>
                 </div>
             </div>
             <div class="bg-primary text-light rounded-top p-5 my-6 mb-0 wow fadeInUp" data-wow-delay="0.1s">
