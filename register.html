@@ -29,6 +29,9 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
     <style>
         .register-page {
             min-height: 100vh;
@@ -51,6 +54,7 @@
 
         .form-floating {
             margin-bottom: 1rem;
+            position: relative;
         }
 
         .form-floating .form-control {
@@ -75,6 +79,13 @@
             text-decoration: none;
             color: #007bff;
         }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
     </style>
 </head>
 
@@ -89,20 +100,24 @@
             <h2 class="text-center mb-4">Register</h2>
             <form id="registerForm" method="post" action="registerdb.php">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="uname" name = "uname" placeholder="Username">
+                    <input type="text" class="form-control" id="uname" name="uname" placeholder="Username">
                     <label for="username">Username</label>
+                    <div class="error-message" id="uname-error">Username must be at least 3 characters long</div>
                 </div>
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="email" name = "email" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="registerEmail">Email Address</label>
+                    <div class="error-message" id="email-error">Please enter a valid email address</div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="password" name = "password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <label for="registerPassword">Create Password</label>
+                    <div class="error-message" id="password-error">Password must be at least 6 characters long and contain uppercase, lowercase and special characters</div>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="confirmPassword" name = "confirmPassword" placeholder="Confirm Password">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
                     <label for="confirmPassword">Confirm Password</label>
+                    <div class="error-message" id="confirmPassword-error">Passwords do not match</div>
                 </div>
                 <button type="submit" class="btn btn-primary register-btn">Register</button>
                 <div class="login-link">
@@ -115,43 +130,80 @@
     <!-- Register Page End -->
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Form Validation -->
     <script>
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            // Perform form validation
-            const username = document.getElementById('uname').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-    
+        $(document).ready(function() {
+            // Username validation
+            $('#uname').on('keyup', function() {
+                let username = $(this).val();
+                if (username.length < 3) {
+                    $(this).addClass('is-invalid');
+                    $('#uname-error').show();
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $('#uname-error').hide();
+                }
+            });
+
             // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address.');
-                event.preventDefault(); // Stop submission if validation fails
-                return;
-            }
-    
-            // Password length validation
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long.');
-                event.preventDefault();
-                return;
-            }
-    
-            // Confirm password validation
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                event.preventDefault();
-                return;
-            }
-    
-            // If everything is valid, let the form submit
+            $('#email').on('keyup', function() {
+                let email = $(this).val();
+                let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    $(this).addClass('is-invalid');
+                    $('#email-error').show();
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $('#email-error').hide();
+                }
+            });
+
+            // Password validation
+            $('#password').on('keyup', function() {
+                let password = $(this).val();
+                let hasUpperCase = /[A-Z]/.test(password);
+                let hasLowerCase = /[a-z]/.test(password);
+                let hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+                
+                if (password.length < 6 || !hasUpperCase || !hasLowerCase || !hasSpecialChar) {
+                    $(this).addClass('is-invalid');
+                    $('#password-error').show();
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $('#password-error').hide();
+                }
+            });
+
+            // Confirm Password validation
+            $('#confirmPassword').on('keyup', function() {
+                let confirmPassword = $(this).val();
+                let password = $('#password').val();
+                if (confirmPassword !== password) {
+                    $(this).addClass('is-invalid');
+                    $('#confirmPassword-error').show();
+                } else {
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                    $('#confirmPassword-error').hide();
+                }
+            });
+
+            // Form submission validation
+            $('#registerForm').on('submit', function(e) {
+                let isValid = true;
+                
+                // Trigger validation for all fields
+                $('#uname, #email, #password, #confirmPassword').trigger('keyup');
+                
+                // Check if any field has error
+                if ($('.is-invalid').length > 0) {
+                    e.preventDefault();
+                    isValid = false;
+                }
+                
+                return isValid;
+            });
         });
     </script>
-    
 </body>
 </html>

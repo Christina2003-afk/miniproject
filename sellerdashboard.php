@@ -19,6 +19,26 @@ if (mysqli_num_rows($result) == 0) {
 }
 
 $seller = mysqli_fetch_assoc($result);
+$sellerId = $seller['reg_id']; // Assuming 'reg_id' is the unique identifier for the seller
+
+// Fetch products for the seller based on reg_id
+$productQuery = "SELECT * FROM seller_products WHERE id = '$sellerId'"; // Ensure 'seller_id' corresponds to 'reg_id'
+$productResult = mysqli_query($conn, $productQuery);
+
+// Check if products exist
+if (mysqli_num_rows($productResult) > 0) {
+    while ($product = mysqli_fetch_assoc($productResult)) {
+        // Display product details
+        echo "<div class='product'>";
+        echo "<h5>" . htmlspecialchars($product['title']) . "</h5>";
+        echo "<p>" . htmlspecialchars($product['description']) . "</p>";
+        echo "<p>Price: $" . htmlspecialchars($product['price']) . "</p>";
+        echo "<img src='" . htmlspecialchars($product['image']) . "' alt='" . htmlspecialchars($product['title']) . "' />";
+        echo "</div>";
+    }
+} else {
+    echo "<p>No products found for this seller.</p>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -342,7 +362,7 @@ $seller = mysqli_fetch_assoc($result);
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="sellerproduct.php">
+                <a class="nav-link" href="productlisting.php">
                     <i class="fas fa-box"></i>
                     Products
                 </a>
@@ -366,15 +386,21 @@ $seller = mysqli_fetch_assoc($result);
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="sellercat.php">
+                <a class="nav-link" href="add_product.php">
                     <i class="fas fa-chart-bar"></i>
-                    categories
+                    add product
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="settings.php">
                     <i class="fas fa-cog"></i>
                     Settings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
                 </a>
             </li>
         </ul>
@@ -422,7 +448,7 @@ $seller = mysqli_fetch_assoc($result);
                             <div>
                                 <h5 class="card-title text-white">Total Products</h5>
                                 <p class="card-text text-white">
-                                    <span id="totalProducts" class="counter">0</span>
+                                    <span id="totalProducts" class="counter">6</span>
                                 </p>
                             </div>
                             <i class="fas fa-box stats-icon text-white"></i>
@@ -458,111 +484,10 @@ $seller = mysqli_fetch_assoc($result);
             </div>
 
             <!-- Add this after the Stats Cards Row and before the Products Table Section -->
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">
-                                <i class="fas fa-plus-circle mr-2 text-primary"></i>
-                                Add New Product
-                            </h5>
-                            <button class="btn btn-sm btn-outline-primary" id="toggleAddProduct">
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                        </div>
-                        <div class="card-body" id="addProductForm" style="display: none;">
-                            <form action="add_product.php" method="POST" enctype="multipart/form-data" id="productForm">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input type="text" class="form-control" name="name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Price</label>
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text">$</span>
-                                                </div>
-                                                <input type="number" class="form-control" name="price" step="0.01" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control" name="category" required>
-                                                <option value="">Select Category</option>
-                                                <option value="paintings">Paintings</option>
-                                                <option value="sculptures">Sculptures</option>
-                                                <option value="digital">Digital Art</option>
-                                                <option value="photography">Photography</option>
-                                                <option value="crafts">Crafts</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Stock Quantity</label>
-                                            <input type="number" class="form-control" name="stock" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Product Image</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="image" id="productImage" required>
-                                                <label class="custom-file-label" for="productImage">Choose file</label>
-                                            </div>
-                                            <div id="imagePreview" class="mt-2" style="display: none;">
-                                                <img src="" alt="Preview" class="img-thumbnail" style="max-height: 200px;">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label>Description</label>
-                                            <textarea class="form-control" name="description" rows="4" required></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-right">
-                                    <button type="button" class="btn btn-secondary" id="cancelAdd">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save mr-2"></i>Save Product
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
 
             <!-- Products Table Section -->
-            <div class="table-container mt-4">
-                <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-                    <h5 class="mb-0">
-                        <i class="fas fa-box-open mr-2 text-primary"></i>
-                        Manage Products
-                    </h5>
-                    
-                </div>
-                <div class="table-responsive">
-                    <table class="table mb-0">
-                        <thead>
-                            <tr>
-                                <th>Product ID</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Product list will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
+           
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

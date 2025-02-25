@@ -2,6 +2,18 @@
 session_start();
 require_once 'dbconfig.php'; // Make sure this path is correct
 $email = isset($_SESSION["email"]) ? $_SESSION["email"] : null;
+$name = null;
+if ($email) {
+    $stmt = $conn->prepare("SELECT name FROM table_reg WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        $name = $row['name'];
+    }
+    $stmt->close();
+}
+
 // if(isset($email))
 // {
 //     ?>
@@ -101,6 +113,7 @@ $email = isset($_SESSION["email"]) ? $_SESSION["email"] : null;
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <a href="become-seller.php" class="nav-item nav-link">become a seller</a>
                 
                 
             </div>
@@ -127,7 +140,7 @@ $email = isset($_SESSION["email"]) ? $_SESSION["email"] : null;
                     ?>
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown">
-                                <?= htmlspecialchars($email) ?>
+                                <?= htmlspecialchars($name) ?>
                             </a>
                             <div class="dropdown-menu">
                                 <a href="profile.php" class="dropdown-item">

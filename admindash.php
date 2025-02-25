@@ -1,6 +1,28 @@
 <?php
 include("dbconfig.php");
 session_start();
+// Check if user is logged in and fetch their role
+if (!isset($_SESSION['email'])) {
+    header("Location: login.html");
+    exit();
+}
+
+$email = $_SESSION['email'];
+$role_query = "SELECT role FROM table_reg WHERE email = ?";
+$stmt = mysqli_prepare($conn, $role_query);
+mysqli_stmt_bind_param($stmt, "s", $email);
+mysqli_stmt_execute($stmt);
+$role_result = mysqli_stmt_get_result($stmt);
+
+if ($role_result && $row = mysqli_fetch_assoc($role_result)) {
+    if ($row['role'] !== 'admin') {
+        header("Location: index.php");
+        exit();
+    }
+} else {
+    header("Location: login.html");
+    exit();
+}
 
 // Fetch all users
 $query = "SELECT reg_id, name, email, status FROM table_reg";
@@ -12,7 +34,9 @@ if (!$result) {
 }
 
 // Add this after the first query at the top of the file
-$seller_query = "SELECT reg_id, name, email, status FROM table_reg WHERE role='seller'";
+// $seller_query = "SELECT reg_id, name, email, status FROM table_reg WHERE role='seller'";
+$seller_query = "SELECT * FROM seller_registration WHERE status='pending'";
+
 $seller_result = mysqli_query($conn, $seller_query);
 
 if (!$seller_result) {
@@ -332,10 +356,12 @@ if (!$seller_result) {
                     <i class="fas fa-tags"></i>
                     <span><h2>Categories</h2></span>
                 </a>
+                
                 <a href="#" class="nav-link">
                     <i class="fas fa-chart-line"></i>
-                    <span><h2>Reports</h2></span>
+                    <span><h2>seller product</h2></span>
                 </a>
+                
             </div>
         </div>
         <div class="main-content">
@@ -458,6 +484,10 @@ if (!$seller_result) {
                                
                                 <th>Seller Name</th>
                                 <th>Email</th>
+                                <th>Phone</th>
+                                <th>Art Category</th>
+                                <th>Bio</th>
+                                <th>Terms Agreed</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -469,11 +499,15 @@ if (!$seller_result) {
                             ?>
                                 <tr>
                                     
-                                    <td><?php echo $row['name']; ?></td>
+                                    <td><?php echo $row['full_name']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['phone_number']; ?></td>
+                                    <td><?php echo $row['art_category']; ?></td>
+                                    <td><?php echo $row['bio']; ?></td>
+                                    <td><?php echo $row['terms_agreed']; ?></td>
                                     <td><?php echo $row['status']; ?></td>
                                     <td>
-                                        <button class="approve-btn" onclick="updateStatus(<?php echo $row['reg_id']; ?>, 'Active')">Approve</button>
+                                        <button class="approve-btn" onclick="updateStatus(<?php echo $row['id']; ?>, 'Active')">Approve</button>
                                         
                                     </td>
                                 </tr>
