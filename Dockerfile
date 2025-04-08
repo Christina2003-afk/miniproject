@@ -1,13 +1,13 @@
 FROM php:8.2-apache
 
-# Enable mod_rewrite if needed
+# Enable Apache modules (like rewrite)
 RUN a2enmod rewrite
 
-# Copy your project to Apache directory
+# Install MySQLi extension
+RUN docker-php-ext-install mysqli
+
+# Copy everything into Apache web root
 COPY . /var/www/html/
 
-# Set correct permissions
+# Set permissions (optional but good practice)
 RUN chown -R www-data:www-data /var/www/html
-
-# Expose port 80
-EXPOSE 80
