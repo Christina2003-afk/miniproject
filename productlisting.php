@@ -1,30 +1,10 @@
-<!-- productlistings.php -->
-<?php
-session_start();
-include("dbconfig.php");
-
-// Check if the seller is logged in
-if (!isset($_SESSION['seller_id'])) {
-    die("You must be logged in to view your products.");
-}
-
-$seller_id = $_SESSION['seller_id'];
-
-// Fetch products for the logged-in seller
-$query = "SELECT * FROM seller_products WHERE seller_id = ?";
-$stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "i", $seller_id);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Listing</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Product Listings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -99,41 +79,52 @@ $result = mysqli_stmt_get_result($stmt);
                 grid-template-columns: 1fr; /* Stack items on smaller screens */
             }
         }
+
+        .btn {
+            background-color:rgb(2, 28, 54); /* Bootstrap primary color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
     </style>
 </head>
 <body>
-    <h1>Your Products</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Seller ID</th>
-                <th>Product Title</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Category</th>
-                <th>Subcategory</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['seller_id']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['title']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['price']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['category']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['subcategory']) . "</td>";
-                    echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='Product Image' width='100'></td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='7'>No products found</td></tr>";
+    <h1>Available Products</h1>
+    <div id="product-list">
+        <?php
+        include("dbconfig.php");
+
+        // Fetch products from the seller_products table
+        $query = "SELECT * FROM seller_products";
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="product">';
+                echo '<img src="' . htmlspecialchars($row['image']) . '" alt="' . htmlspecialchars($row['title']) . '">';
+                echo '<h2>' . htmlspecialchars($row['title']) . '</h2>';
+                echo '<p>' . htmlspecialchars($row['description']) . '</p>';
+                echo '<p class="price">Price: $' . htmlspecialchars($row['price']) . '</p>';
+                echo '<p class="category">category: ' . htmlspecialchars($row['Category']) . '</p>';
+                echo '<p class="subcategory">Subcategory: ' . htmlspecialchars($row['subcategory']) . '</p>';
+                echo '</div>';
             }
-            ?>
-        </tbody>
-    </table>
+        } else {
+            echo '<p>No products available.</p>';
+        }
+
+        // Close the database connection
+        mysqli_close($conn);
+        ?>
+    </div>
+    <button class="btn" onclick="window.location.href='sellerdashboard.php'" style="margin: 20px auto; display: block;">Go to Seller Dashboard</button>
 </body>
 </html>

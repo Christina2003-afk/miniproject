@@ -344,9 +344,13 @@ if (!$seller_result) {
                     <i class="fas fa-store"></i>
                     <span><h2>Seller Management</h2></span>
                 </a>
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link" data-section="bid-management">
                     <i class="fas fa-gavel"></i>
                     <span><h2>Bid Management</h2></span>
+                </a>
+                <a href="bidwinner.php" class="nav-link">
+                    <i class="fas fa-trophy"></i>
+                    <span><h2>Bid Victor</h2></span>
                 </a>
                 <a href="#" class="nav-link">
                     <i class="fas fa-plus-circle"></i>
@@ -356,12 +360,28 @@ if (!$seller_result) {
                     <i class="fas fa-tags"></i>
                     <span><h2>Categories</h2></span>
                 </a>
-                
                 <a href="#" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span><h2>seller product</h2></span>
+                    <i class="fas fa-shopping-bag"></i>
+                    <span><h2>Orders</h2></span>
                 </a>
-                
+              
+                <a href="shipping_overview.php" class="nav-link">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span><h2>Shipment Overview</h2></span>
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-bar"></i>
+                    <span><h2>Reports</h2></span>
+                </a>
+                <a href="update_review_status.php" class="nav-link">
+                    <i class="fas fa-star"></i>
+                    <span><h2>Reviews</h2></span>
+                </a>
+                <a href="admin_earnings.php" class="nav-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span><h2>Total Earnings</h2></span>
+                </a>
+            
             </div>
         </div>
         <div class="main-content">
@@ -403,7 +423,7 @@ if (!$seller_result) {
                         <div class="summary-box-header">
                             <i class="fas fa-shopping-cart" style="color: #2ecc71;"></i>
                         </div>
-                        <h3>0</h3>
+                        <h3>30</h3>
                         <p>Total Orders</p>
                         <span class="trend up">+8.2% from last month</span>
                     </div>
@@ -560,11 +580,32 @@ if (!$seller_result) {
                     usersContent.style.display = 'none';
                     sellerContent.style.display = 'block';
                 }
+                else if (linkText === 'Reports') {
+                    window.location.href = 'report_overview.php';
+                }
+                else if (linkText === 'Bid Victor') {
+                    window.location.href = 'bidwinner.php';
+                }
                 else if (linkText === 'Categories') {
                     window.location.href = 'admincat.php';
                 }
                 else if (linkText === 'Product') {
                     window.location.href = 'productmang.php';
+                }
+                else if (linkText === 'Bid Management') {
+                    window.location.href = 'Bid_manage.php';
+                }
+                else if (linkText === 'Orders') {
+                    window.location.href = 'orders.php';
+                }
+                else if (linkText === 'Shipment Overview') {
+                    window.location.href = 'shipping_overview.php';
+                }
+                else if (linkText === 'Reviews') {
+                    window.location.href = 'update_review_status.php';
+                }
+                else if (linkText === 'Total Earnings') {
+                    window.location.href = 'admin_earnings.php';
                 }
             });
         });

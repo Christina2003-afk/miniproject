@@ -1,0 +1,450 @@
+2025-03-13 14:54:14 - Request: Array
+(
+    [payment_id] => pay_Q6IYNnCsto65B4
+    [product_id] => 2
+    [amount] => 650000
+)
+
+2025-03-13 14:54:14 - Processing payment_id: pay_Q6IYNnCsto65B4, product_id: 2, amount: 650000
+2025-03-13 14:54:14 - Product found: Watercolor painting, price: 6500.00, amount_in_paise: 650000
+2025-03-13 14:54:14 - Skipping Razorpay verification for testing
+2025-03-13 15:28:11 - Request: Array
+(
+    [payment_id] => pay_Q6J8G6ckGha58G
+    [product_id] => 3
+    [amount] => 355000
+)
+
+2025-03-13 15:28:11 - Processing payment_id: pay_Q6J8G6ckGha58G, product_id: 3, amount: 355000
+2025-03-13 15:28:11 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-03-13 15:28:11 - Skipping Razorpay verification for testing
+2025-03-14 08:55:03 - Request: Array
+(
+    [payment_id] => pay_Q6ay9Foi2rZMQa
+    [product_id] => 2
+    [amount] => 650000
+)
+
+2025-03-14 08:55:03 - Processing payment_id: pay_Q6ay9Foi2rZMQa, product_id: 2, amount: 650000
+2025-03-14 08:55:03 - Product found: Watercolor painting, price: 6500.00, amount_in_paise: 650000
+2025-03-14 08:55:03 - Skipping Razorpay verification for testing
+2025-03-14 09:00:33 - Request: Array
+(
+    [payment_id] => pay_Q6b3tiRYW9OuN3
+    [product_id] => 3
+    [amount] => 355000
+)
+
+2025-03-14 09:00:33 - Processing payment_id: pay_Q6b3tiRYW9OuN3, product_id: 3, amount: 355000
+2025-03-14 09:00:33 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-03-14 09:00:33 - Skipping Razorpay verification for testing
+2025-03-14 09:05:32 - Request: Array
+(
+    [payment_id] => pay_Q6b9EM52ATMj1S
+    [product_id] => 3
+    [amount] => 355000
+)
+
+2025-03-14 09:05:32 - Processing payment_id: pay_Q6b9EM52ATMj1S, product_id: 3, amount: 355000
+2025-03-14 09:05:32 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-03-14 09:05:32 - Skipping Razorpay verification for testing
+2025-03-14 09:05:32 - Order created successfully, ID: 1
+2025-03-14 09:07:35 - Request: Array
+(
+    [payment_id] => pay_Q6bBJ1cKETEOcV
+    [product_id] => 4
+    [amount] => 780000
+)
+
+2025-03-14 09:07:35 - Processing payment_id: pay_Q6bBJ1cKETEOcV, product_id: 4, amount: 780000
+2025-03-14 09:07:35 - Product found: Concept art, price: 7800.00, amount_in_paise: 780000
+2025-03-14 09:07:35 - Skipping Razorpay verification for testing
+2025-03-14 09:07:35 - Order created successfully, ID: 2
+2025-03-14 15:16:56 - Request: Array
+(
+    [payment_id] => pay_Q6hTWfXEjYMsGD
+    [product_id] => 11
+    [amount] => 890000
+)
+
+2025-03-14 15:16:56 - Processing payment_id: pay_Q6hTWfXEjYMsGD, product_id: 11, amount: 890000
+2025-03-14 15:16:56 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-14 15:16:56 - Skipping Razorpay verification for testing
+2025-03-14 15:16:56 - Order created successfully, ID: 3
+2025-03-14 15:33:35 - Request: Array
+(
+    [payment_id] => pay_Q6hl5rJCcGoF22
+    [product_id] => 11
+    [amount] => 890000
+    [name] => drishya 
+    [email] => drishyajose2027@mca.ajce.in
+    [phone] => 9076523452
+    [address] => Thengumpallil
+    [city] => chunkapara
+    [pincode] => 686547
+)
+
+2025-03-14 15:33:35 - Processing payment_id: pay_Q6hl5rJCcGoF22, product_id: 11, amount: 890000
+2025-03-14 15:33:35 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-14 15:33:35 - Skipping Razorpay verification for testing
+2025-03-14 15:33:35 - Order created successfully, ID: 4
+2025-03-14 16:53:07 - Request: Array
+(
+    [payment_id] => pay_Q6j7AbevXI8t7E
+    [product_id] => 11
+    [amount] => 890000
+    [name] => drishya 
+    [email] => drishyajose2027@mca.ajce.in
+    [phone] => 9076523452
+    [address] => Thengumpallil
+    [city] => chunkapara
+    [pincode] => 686547
+)
+
+2025-03-14 16:53:07 - Processing payment_id: pay_Q6j7AbevXI8t7E, product_id: 11, amount: 890000
+2025-03-14 16:53:07 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-14 16:53:07 - Skipping Razorpay verification for testing
+2025-03-14 16:53:07 - Order created successfully, ID: 5
+2025-03-15 03:52:56 - Processing payment_id: pay_Q6uM6lxbiS67Ez, product_id: 12, amount: 250000
+2025-03-15 03:52:56 - Customer info: drishya jose, drishyajose2027@mca.ajce.in, 9988776655
+2025-03-15 03:52:56 - Skipping Razorpay verification for testing
+2025-03-17 10:16:56 - Request: Array
+(
+    [payment_id] => pay_Q7ny2QqSM2mEoH
+    [product_id] => 15
+    [amount] => 450000
+    [name] => keerthana
+    [email] => keeru@gmail.com
+    [phone] => 9875678456
+    [address] => purappanthanam 
+    [city] => kanjirapally
+    [pincode] => 686542
+)
+
+2025-03-17 10:16:56 - Processing payment_id: pay_Q7ny2QqSM2mEoH, product_id: 15, amount: 450000
+2025-03-17 10:16:56 - Product found: Enchanted Forest Reflections, price: 4500.00, amount_in_paise: 450000
+2025-03-17 10:16:56 - Skipping Razorpay verification for testing
+2025-03-17 10:16:56 - Order created successfully, ID: 6
+2025-03-17 11:22:42 - Request: Array
+(
+    [payment_id] => pay_Q7p5VUA9K2aiR0
+    [product_id] => 11
+    [amount] => 890000
+    [name] => athira biju
+    [email] => athirabiju2027@mca.ajce.in
+    [phone] => 9922338877
+    [address] => mannaplackal
+    [city] => ponkunnam
+    [pincode] => 868549
+)
+
+2025-03-17 11:22:42 - Processing payment_id: pay_Q7p5VUA9K2aiR0, product_id: 11, amount: 890000
+2025-03-17 11:22:42 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-17 11:22:42 - Skipping Razorpay verification for testing
+2025-03-17 11:22:42 - Order created successfully, ID: 7
+2025-03-17 11:26:27 - Request: Array
+(
+    [payment_id] => pay_Q7p9TkLyHkL1DG
+    [product_id] => 13
+    [amount] => 780000
+    [name] => keerthana
+    [email] => keeru@gmail.com
+    [phone] => 9072377787
+    [address] => thengumpallil
+    [city] => ponkunnam
+    [pincode] => 686547
+)
+
+2025-03-17 11:26:27 - Processing payment_id: pay_Q7p9TkLyHkL1DG, product_id: 13, amount: 780000
+2025-03-17 11:26:27 - Product found: Rhythm of Colors, price: 7800.00, amount_in_paise: 780000
+2025-03-17 11:26:27 - Skipping Razorpay verification for testing
+2025-03-17 11:26:27 - Order created successfully, ID: 8
+2025-03-17 11:32:04 - Request: Array
+(
+    [payment_id] => pay_Q7pFQD3xl0hdkV
+    [product_id] => 13
+    [amount] => 780000
+    [name] => drishyaa
+    [email] => drishya@gmail.com
+    [phone] => 9072377787
+    [address] => pullolil
+    [city] => malapuram
+    [pincode] => 686547
+)
+
+2025-03-17 11:32:04 - Processing payment_id: pay_Q7pFQD3xl0hdkV, product_id: 13, amount: 780000
+2025-03-17 11:32:04 - Product found: Rhythm of Colors, price: 7800.00, amount_in_paise: 780000
+2025-03-17 11:32:04 - Skipping Razorpay verification for testing
+2025-03-17 11:32:04 - Order created successfully, ID: 10
+2025-03-17 11:36:22 - Request: Array
+(
+    [payment_id] => pay_Q7pJwpDV4ZAKUD
+    [product_id] => 13
+    [amount] => 780000
+    [name] => drishyaa
+    [email] => drishya@gmail.com
+    [phone] => 9072377787
+    [address] => pullolil
+    [city] => malapuram
+    [pincode] => 686547
+)
+
+2025-03-17 11:36:22 - Processing payment_id: pay_Q7pJwpDV4ZAKUD, product_id: 13, amount: 780000
+2025-03-17 11:36:22 - Product found: Rhythm of Colors, price: 7800.00, amount_in_paise: 780000
+2025-03-17 11:36:22 - Skipping Razorpay verification for testing
+2025-03-17 11:36:22 - Order created successfully, ID: 11
+2025-03-17 14:50:56 - Request: Array
+(
+    [payment_id] => pay_Q7sdWKLgdOTZbI
+    [product_id] => 11
+    [amount] => 890000
+    [name] => tincymol
+    [email] => tincy23@gmail.com
+    [phone] => 1234567891
+    [address] => mannamplackal
+    [city] => erumely
+    [pincode] => 6765422
+)
+
+2025-03-17 14:50:56 - Processing payment_id: pay_Q7sdWKLgdOTZbI, product_id: 11, amount: 890000
+2025-03-17 14:50:56 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-17 14:50:56 - Skipping Razorpay verification for testing
+2025-03-17 14:50:56 - Order created successfully, ID: 13
+2025-03-17 14:55:00 - Request: Array
+(
+    [payment_id] => pay_Q7shn1Ty0cLkFk
+    [product_id] => 11
+    [amount] => 890000
+    [name] => tincymol
+    [email] => tincy23@gmail.com
+    [phone] => 1234567891
+    [address] => Mannamplackal
+    [city] => erumely
+    [pincode] => 676542
+)
+
+2025-03-17 14:55:00 - Processing payment_id: pay_Q7shn1Ty0cLkFk, product_id: 11, amount: 890000
+2025-03-17 14:55:00 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-17 14:55:00 - Skipping Razorpay verification for testing
+2025-03-17 14:55:00 - Order created successfully, ID: 16
+2025-03-17 15:27:29 - Request: Array
+(
+    [payment_id] => pay_Q7tG3Hk2VsG3ZR
+    [product_id] => 3
+    [amount] => 355000
+    [name] => Neenu
+    [email] => neenu@gmail.com
+    [phone] => 0123456789
+    [address] => Thengumthottam
+    [city] => pathanamthitta
+    [pincode] => 676542
+)
+
+2025-03-17 15:27:29 - Processing payment_id: pay_Q7tG3Hk2VsG3ZR, product_id: 3, amount: 355000
+2025-03-17 15:27:29 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-03-17 15:27:29 - Skipping Razorpay verification for testing
+2025-03-17 15:27:29 - Order created successfully, ID: 18
+2025-03-18 04:35:00 - Request: Array
+(
+    [payment_id] => pay_Q86fx1jNlVvXCs
+    [product_id] => 3
+    [amount] => 355000
+    [name] => krishna
+    [email] => xcvbn@gmail.com
+    [phone] => 123456654
+    [address] => sdfghj
+    [city] => sdfgh
+    [pincode] => 34567
+)
+
+2025-03-18 04:35:00 - Processing payment_id: pay_Q86fx1jNlVvXCs, product_id: 3, amount: 355000
+2025-03-18 04:35:00 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-03-18 04:35:00 - Skipping Razorpay verification for testing
+2025-03-18 04:35:00 - Order created successfully, ID: 20
+2025-03-18 07:25:48 - Request: Array
+(
+    [payment_id] => pay_Q89aN6ptHPryHw
+    [product_id] => 1
+    [amount] => 500000
+    [name] => mariya
+    [email] => mariya@gmail.com
+    [phone] => 9123456789
+    [address] => mannil
+    [city] => pala
+    [pincode] => 65431456
+)
+
+2025-03-18 07:25:48 - Processing payment_id: pay_Q89aN6ptHPryHw, product_id: 1, amount: 500000
+2025-03-18 07:25:48 - Product found: oil painting, price: 5000.00, amount_in_paise: 500000
+2025-03-18 07:25:48 - Skipping Razorpay verification for testing
+2025-03-18 07:25:48 - Order created successfully, ID: 22
+2025-03-18 16:34:41 - Request: Array
+(
+    [payment_id] => pay_Q8IwE1NnJqkj7f
+    [product_id] => 11
+    [amount] => 890000
+    [name] => sijo abraham
+    [email] => sijo@gmail.com
+    [phone] => 907237787
+    [address] => olickal
+    [city] => perumpetty
+    [pincode] => 686547
+)
+
+2025-03-18 16:34:41 - Processing payment_id: pay_Q8IwE1NnJqkj7f, product_id: 11, amount: 890000
+2025-03-18 16:34:41 - Product found: The Lantern Dance, price: 8900.00, amount_in_paise: 890000
+2025-03-18 16:34:41 - Skipping Razorpay verification for testing
+2025-03-18 16:34:41 - Order created successfully, ID: 24
+2025-03-19 09:13:23 - Request: Array
+(
+    [payment_id] => pay_Q8Zx5g4JWW4KaL
+    [product_id] => 2
+    [amount] => 650000
+    [name] => Jubin Shaji
+    [email] => jubinshaji08@gmail.com
+    [phone] => 09778317567
+    [address] => ghggh
+    [city] => chunkapara
+    [pincode] => 686547
+)
+
+2025-03-19 09:13:23 - Processing payment_id: pay_Q8Zx5g4JWW4KaL, product_id: 2, amount: 650000
+2025-03-19 09:13:23 - Product found: Watercolor painting, price: 6500.00, amount_in_paise: 650000
+2025-03-19 09:13:23 - Skipping Razorpay verification for testing
+2025-03-19 09:13:23 - Order created successfully, ID: 26
+2025-03-19 09:17:14 - Request: Array
+(
+    [payment_id] => pay_Q8a1AlNGUGgltI
+    [product_id] => 14
+    [amount] => 500000
+    [name] => athira biju
+    [email] => athira@gmail.com
+    [phone] => 9072377787
+    [address] => dfghjkjhgffgh
+    [city] => malapuram
+    [pincode] => 636465
+)
+
+2025-03-19 09:17:14 - Processing payment_id: pay_Q8a1AlNGUGgltI, product_id: 14, amount: 500000
+2025-03-19 09:17:14 - Product found: Shadow of the Wild, price: 5000.00, amount_in_paise: 500000
+2025-03-19 09:17:14 - Skipping Razorpay verification for testing
+2025-03-19 09:17:14 - Order created successfully, ID: 28
+2025-03-28 16:34:42 - Request: Array
+(
+    [payment_id] => pay_QCGHJEtM3UxjIK
+    [product_id] => 1
+    [amount] => 500000
+    [name] => lechu
+    [email] => lechu@gmail.com
+    [phone] => 9072377787
+    [address] => orakkampara
+    [city] => pathanamthitta
+    [pincode] => 686547
+)
+
+2025-03-28 16:34:42 - Processing payment_id: pay_QCGHJEtM3UxjIK, product_id: 1, amount: 500000
+2025-03-28 16:34:42 - Product found: oil painting, price: 5000.00, amount_in_paise: 500000
+2025-03-28 16:34:42 - Skipping Razorpay verification for testing
+2025-03-28 16:34:42 - Order created successfully, ID: 30
+2025-04-01 16:34:27 - Request: Array
+(
+    [payment_id] => pay_QDpOENRrYw0dVl
+    [product_id] => 3
+    [amount] => 355000
+    [name] => tincymol
+    [email] => tincy23@gmail.com
+    [phone] => 9072377787
+    [address] => mannamplackal
+    [city] => erumely
+    [pincode] => 686547
+)
+
+2025-04-01 16:34:27 - Processing payment_id: pay_QDpOENRrYw0dVl, product_id: 3, amount: 355000
+2025-04-01 16:34:27 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-04-01 16:34:27 - Skipping Razorpay verification for testing
+2025-04-01 16:34:27 - Order created successfully, ID: 32
+2025-04-01 16:53:35 - Request: Array
+(
+    [payment_id] => pay_QDpiPolyvYrGnI
+    [product_id] => 14
+    [amount] => 500000
+    [name] => drishya jose
+    [email] => drishyajose2027@mca.ajce.in
+    [phone] => 9072377787
+    [address] => pullolil
+    [city] => malapuram
+    [pincode] => 686542
+)
+
+2025-04-01 16:53:35 - Processing payment_id: pay_QDpiPolyvYrGnI, product_id: 14, amount: 500000
+2025-04-01 16:53:35 - Product found: Shadow of the Wild, price: 5000.00, amount_in_paise: 500000
+2025-04-01 16:53:35 - Skipping Razorpay verification for testing
+2025-04-01 16:53:35 - Order created successfully, ID: 33
+2025-04-04 17:02:39 - Request: Array
+(
+    [payment_id] => pay_QF1TMPrQnDJ7Nj
+    [product_id] => 1
+    [amount] => 500000
+    [name] => tincy
+    [email] => tincy23@gmail.com
+    [phone] => 9072377787
+    [address] => Thengumpallil
+    [city] => chunkapara
+    [pincode] => 686547
+)
+
+2025-04-04 17:02:39 - Processing payment_id: pay_QF1TMPrQnDJ7Nj, product_id: 1, amount: 500000
+2025-04-04 17:02:39 - Product found: oil painting, price: 5000.00, amount_in_paise: 500000
+2025-04-04 17:02:39 - Skipping Razorpay verification for testing
+2025-04-04 17:02:39 - Order created successfully, ID: 34
+2025-04-04 17:22:49 - Request: Array
+(
+    [payment_id] => pay_QF1oeNuMnAwnyZ
+    [product_id] => 2
+    [amount] => 650000
+    [name] => tincy
+    [email] => tincy23@gmail.com
+    [phone] => 9072377787
+    [address] => Thengumpallil
+    [city] => chunkapara
+    [pincode] => 686547
+)
+
+2025-04-04 17:22:49 - Processing payment_id: pay_QF1oeNuMnAwnyZ, product_id: 2, amount: 650000
+2025-04-04 17:22:49 - Product found: Watercolor painting, price: 6500.00, amount_in_paise: 650000
+2025-04-04 17:22:49 - Skipping Razorpay verification for testing
+2025-04-04 17:22:49 - Order created successfully, ID: 35
+2025-04-05 18:03:11 - Request: Array
+(
+    [payment_id] => pay_QFR2RnJlX2sjUP
+    [product_id] => 2
+    [amount] => 650000
+    [name] => tincy
+    [email] => tincy23@gmail.com
+    [phone] => 9076553322
+    [address] => mannamplackal
+    [city] => kottayam
+    [pincode] => 686547
+)
+
+2025-04-05 18:03:11 - Processing payment_id: pay_QFR2RnJlX2sjUP, product_id: 2, amount: 650000
+2025-04-05 18:03:11 - Product found: Watercolor painting, price: 6500.00, amount_in_paise: 650000
+2025-04-05 18:03:11 - Skipping Razorpay verification for testing
+2025-04-05 18:03:11 - Order created successfully, ID: 36
+2025-04-05 18:10:31 - Request: Array
+(
+    [payment_id] => pay_QFRACIn4sK8PnG
+    [product_id] => 3
+    [amount] => 355000
+    [name] => keerthana
+    [email] => drishyajose2027@mca.ajce.in
+    [phone] => 9072377787
+    [address] => jsggdddd
+    [city] => ponkunnam
+    [pincode] => 686542
+)
+
+2025-04-05 18:10:31 - Processing payment_id: pay_QFRACIn4sK8PnG, product_id: 3, amount: 355000
+2025-04-05 18:10:31 - Product found: Acrylin painting, price: 3550.00, amount_in_paise: 355000
+2025-04-05 18:10:31 - Skipping Razorpay verification for testing
+2025-04-05 18:10:31 - Order created successfully, ID: 37

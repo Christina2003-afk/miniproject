@@ -85,230 +85,249 @@ $subcategories_result = mysqli_query($conn, $subcategories_query);
     <title>Category Management - Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #007bff;
+            --primary-color: #4361ee;
             --secondary-color: #6c757d;
-            --accent-color: #28a745;
-            --danger-color: #dc3545;
+            --accent-color: #48cae4;
+            --danger-color: #e63946;
             --light-bg: #f8f9fa;
             --dark-bg: #343a40;
             --text-color: #212529;
-            --sidebar-width: 250px;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --header-gradient: linear-gradient(135deg, #4361ee, #3f37c9);
         }
 
         body {
-            background-color: var(--light-bg);
+            background-color: #f5f7fb;
             font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
         }
 
-        .sidebar {
-            width: var(--sidebar-width);
-            background: #B37A41;  /* Brown color as shown in image */
+        .page-header {
+            background: rgb(159, 108, 45);
             color: white;
-            padding: 20px;
-            min-height: 100vh;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: var(--card-shadow);
         }
 
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
-
-        .nav-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            transition: 0.3s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-        }
-
-        .nav-link i {
-            width: 20px;
-        }
-
-        .nav-link span {
-            font-size: 1.1rem;
+        .header-title {
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .content-section {
             background: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
-            box-shadow: 0 0.15rem 1.75rem rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 15px 20px;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .form-control, .form-select {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.15);
+        }
+        
+        .btn-primary {
+            background-color: rgb(159, 108, 45);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a56d4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(67, 97, 238, 0.2);
         }
         
         .category-card {
             background: #f8f9fa;
             border-radius: 8px;
-            padding: 15px;
+            padding: 18px;
             margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
         }
         
         .subcategory-item {
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px;
+            margin: 6px 0;
             background: white;
-            border-radius: 5px;
-            border-left: 3px solid #007bff;
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .alert {
-            margin-bottom: 20px;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            padding: 15px 20px;
+        }
+
+        .action-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #495057;
         }
     </style>
 </head>
 <body>
-    <div class="d-flex">
-        <div class="sidebar">
-            <div class="logo-section">
-                <img src="logo.png" alt="Logo" class="logo">
-                <h2>Admin Dashboard</h2>
+    <div class="page-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="header-title mb-0"><i class="fas fa-folder-tree me-2"></i>Category Management</h2>
+                <a href="admindash.php" class="btn btn-light"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
             </div>
-            
-            <nav class="nav-links">
-                <a href="admindash.php" class="nav-link">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-users"></i>
-                    <span>Manage Users</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-store"></i>
-                    <span>Seller Management</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-gavel"></i>
-                    <span>Bid Management</span>
-                </a>
-                <a href="productmang.php" class="nav-link">
-                    <i class="fas fa-box"></i>
-                    <span>Product</span>
-                </a>
-                <a href="admincat.php" class="nav-link active">
-                    <i class="fas fa-tags"></i>
-                    <span>Categories</span>
-                </a>
-                <a href="#" class="nav-link">
-                    <i class="fas fa-chart-line"></i>
-                    <span>Reports</span>
-                </a>
-            </nav>
         </div>
+    </div>
 
-        <div class="main-content flex-grow-1 p-4">
-            <h2 class="mb-4">Category Management</h2>
+    <div class="container pb-5">
+        <?php if (isset($_SESSION['success'])) { ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>
+                <?php 
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php } ?>
 
-            <?php if (isset($_SESSION['success'])) { ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php 
-                    echo $_SESSION['success'];
-                    unset($_SESSION['success']);
-                    ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php } ?>
+        <?php if (isset($_SESSION['error'])) { ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <?php 
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php } ?>
 
-            <?php if (isset($_SESSION['error'])) { ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php 
-                    echo $_SESSION['error'];
-                    unset($_SESSION['error']);
-                    ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php } ?>
-
-            <div class="row">
-                <!-- Add Category Form -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Add New Category</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="" method="POST">
-                                <div class="mb-3">
-                                    <label for="categoryName" class="form-label">Category Name</label>
-                                    <input type="text" class="form-control" id="categoryName" name="category_name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="categoryDescription" class="form-label">Description</label>
-                                    <textarea class="form-control" id="categoryDescription" name="category_description" rows="2"></textarea>
-                                </div>
-                                <button type="submit" name="add_category" class="btn btn-primary">Add Category</button>
-                            </form>
-                        </div>
+        <div class="row g-4">
+            <!-- Add Category Form -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-plus-circle me-2 text-primary"></i>Add New Category</h5>
                     </div>
-                </div>
-
-                <!-- Add Subcategory Form -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Add New Subcategory</h5>
-                        </div>
-                        <div class="card-body">
-                            <form action="" method="POST">
-                                <div class="mb-3">
-                                    <label for="parentCategory" class="form-label">Parent Category</label>
-                                    <select class="form-select" id="parentCategory" name="category_id" required>
-                                        <option value="">Select Category</option>
-                                        <?php 
-                                        mysqli_data_seek($categories_result, 0);
-                                        while($category = mysqli_fetch_assoc($categories_result)) { 
-                                        ?>
-                                            <option value="<?php echo $category['category_id']; ?>">
-                                                <?php echo htmlspecialchars($category['category_name']); ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="subcategoryName" class="form-label">Subcategory Name</label>
-                                    <input type="text" class="form-control" id="subcategoryName" name="subcategory_name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="subcategoryDescription" class="form-label">Description</label>
-                                    <textarea class="form-control" id="subcategoryDescription" name="subcategory_description" rows="2"></textarea>
-                                </div>
-                                <button type="submit" name="add_subcategory" class="btn btn-primary">Add Subcategory</button>
-                            </form>
-                        </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">Category Name</label>
+                                <input type="text" class="form-control" id="categoryName" name="category_name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="categoryDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="categoryDescription" name="category_description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" name="add_category" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Category
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="text-center mb-4">
-                <a href="viewcategory.php" class="btn btn-primary">
-                    <i class="fas fa-list"></i> View All Categories
-                </a>
-            </div>
 
-            <!-- Cvategories and Subcategories List -->
-           
+            <!-- Add Subcategory Form -->
+            <div class="col-md-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="fas fa-layer-group me-2 text-primary"></i>Add New Subcategory</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+                            <div class="mb-3">
+                                <label for="parentCategory" class="form-label">Parent Category</label>
+                                <select class="form-select" id="parentCategory" name="category_id" required>
+                                    <option value="">Select Category</option>
+                                    <?php 
+                                    mysqli_data_seek($categories_result, 0);
+                                    while($category = mysqli_fetch_assoc($categories_result)) { 
+                                    ?>
+                                        <option value="<?php echo $category['category_id']; ?>">
+                                            <?php echo htmlspecialchars($category['category_name']); ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subcategoryName" class="form-label">Subcategory Name</label>
+                                <input type="text" class="form-control" id="subcategoryName" name="subcategory_name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subcategoryDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="subcategoryDescription" name="subcategory_description" rows="3"></textarea>
+                            </div>
+                            <button type="submit" name="add_subcategory" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Add Subcategory
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="viewcategory.php" class="btn btn-primary action-button">
+                <i class="fas fa-list me-2"></i>View All Categories
+            </a>
+        </div>
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

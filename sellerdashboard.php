@@ -8,8 +8,15 @@ if (!isset($_SESSION['email']) || empty($_SESSION['email'])) {
     exit();
 }
 
-// Get seller information from database
+// Set seller_email in SESSION if not already set
+if (!isset($_SESSION['seller_email'])) {
+    $_SESSION['seller_email'] = $_SESSION['email'];
+}
+
 $email = $_SESSION['email'];
+$seller_email = $_SESSION['seller_email'];
+
+// Get seller information from database
 $query = "SELECT * FROM table_reg WHERE email = '$email' AND role = 'seller'";
 $result = mysqli_query($conn, $query);
 
@@ -25,20 +32,21 @@ $sellerId = $seller['reg_id']; // Assuming 'reg_id' is the unique identifier for
 $productQuery = "SELECT * FROM seller_products WHERE id = '$sellerId'"; // Ensure 'seller_id' corresponds to 'reg_id'
 $productResult = mysqli_query($conn, $productQuery);
 
-// Check if products exist
-if (mysqli_num_rows($productResult) > 0) {
-    while ($product = mysqli_fetch_assoc($productResult)) {
-        // Display product details
-        echo "<div class='product'>";
-        echo "<h5>" . htmlspecialchars($product['title']) . "</h5>";
-        echo "<p>" . htmlspecialchars($product['description']) . "</p>";
-        echo "<p>Price: $" . htmlspecialchars($product['price']) . "</p>";
-        echo "<img src='" . htmlspecialchars($product['image']) . "' alt='" . htmlspecialchars($product['title']) . "' />";
-        echo "</div>";
-    }
-} else {
-    echo "<p>No products found for this seller.</p>";
-}
+// Fetch notifications for the logged-in seller
+$notif_query = "SELECT * FROM seller_notifications WHERE seller_email = ? ORDER BY created_at DESC";
+$notif_stmt = $conn->prepare($notif_query);
+$notif_stmt->bind_param("s", $seller_email);
+$notif_stmt->execute();
+$notif_result = $notif_stmt->get_result();
+
+// Count unread notifications
+$count_query = "SELECT COUNT(*) AS unread_count FROM seller_notifications WHERE seller_email = ? AND is_read = 0";
+$count_stmt = $conn->prepare($count_query);
+$count_stmt->bind_param("s", $seller_email);
+$count_stmt->execute();
+$count_result = $count_stmt->get_result();
+$count_row = $count_result->fetch_assoc();
+$unread_count = $count_row['unread_count'];
 ?>
 
 <!DOCTYPE html>
@@ -344,6 +352,48 @@ if (mysqli_num_rows($productResult) > 0) {
         .btn-secondary:hover {
             background-color: #7f8c8d;
         }
+
+        /* Notification styles */
+        .notifications-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(183, 101, 24, 0.15);
+        }
+        
+        .notification {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 5px;
+            text-align: left;
+        }
+        
+        .notification.unread {
+            background-color: #e6f7ff;
+            border-left: 3px solid #1890ff;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #f56565;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -368,27 +418,42 @@ if (mysqli_num_rows($productResult) > 0) {
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="Bidding.html">
+                <a class="nav-link" href="seller_bid_submission.php">
                     <i class="fas fa-gavel"></i>
                     Bid Art
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="orders.php">
+                <a class="nav-link" href="sellerorders.php">
                     <i class="fas fa-shopping-cart"></i>
                     Orders
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="customers.php">
+                <a class="nav-link" href="bid_details.php">
                     <i class="fas fa-users"></i>
-                    Customers
+                    Bid details
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="add_product.php">
                     <i class="fas fa-chart-bar"></i>
                     add product
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="total_earnings.php">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Total Earnings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="notifications.php">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                    <?php if ($unread_count > 0): ?>
+                    <span class="notification-badge"><?php echo $unread_count; ?></span>
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -437,6 +502,43 @@ if (mysqli_num_rows($productResult) > 0) {
                         <i class="far fa-calendar-alt mr-2"></i>
                         <span id="currentDateTime"></span>
                     </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div class="notifications-section mb-4">
+                <h4 class="mb-3">Recent Notifications (<?php echo $unread_count; ?> Unread)</h4>
+                
+                <div class="notifications">
+                    <?php
+                    if ($notif_result->num_rows > 0) {
+                        $counter = 0;
+                        while ($notif = $notif_result->fetch_assoc()) {
+                            $counter++;
+                            if ($counter > 5) break; // Show only the 5 most recent notifications
+                            
+                            $class = $notif['is_read'] ? "notification" : "notification unread";
+                            echo "<div class='$class'>";
+                            echo "<p class='mb-1'>" . htmlspecialchars($notif['message']) . "</p>";
+                            echo "<small class='text-muted'>Received on: " . $notif['created_at'] . "</small>";
+                            echo "</div>";
+                        }
+                        
+                        if ($unread_count > 0) {
+                            echo "<div class='text-center mt-3'>";
+                            echo "<form method='POST' action='mark_notifications.php'>";
+                            echo "<button type='submit' class='btn btn-sm btn-primary'>Mark all as read</button>";
+                            echo "</form>";
+                            echo "</div>";
+                        }
+                        
+                        echo "<div class='text-center mt-2'>";
+                        echo "<a href='notifications.php' class='text-primary'>View all notifications</a>";
+                        echo "</div>";
+                    } else {
+                        echo "<p class='text-center'>No notifications yet.</p>";
+                    }
+                    ?>
                 </div>
             </div>
 
@@ -622,4 +724,10 @@ if (mysqli_num_rows($productResult) > 0) {
         }
     </script>
 </body>
-</html> 
+</html>
+
+<?php
+$notif_stmt->close();
+$count_stmt->close();
+$conn->close();
+?> 

@@ -78,7 +78,7 @@
                 <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
                 <a href="collection.php" class="nav-item nav-link active">Collection</a>
-                <a href="bidding.html" class="nav-item nav-link active">Bidding</a>
+                <a href="bidding.php" class="nav-item nav-link active">Bidding</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu m-0">
@@ -341,9 +341,9 @@
                                                     <div class="stock-info">Stock: ${product.stock_quantity}</div>
                                                 </div>
                                                 <div class="store-overlay">
-                                                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4 m-2">More Detail</a>
-                                                    <button onclick="addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})" 
-                                                            class="btn btn-dark rounded-pill py-2 px-4 m-2">Add to Cart</button>
+                                                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4 m-2">View</a>
+                                                    <button class="action-btn accepted" onclick="addToCart(${product.product_id})">Add to Cart</button>
+                                                    <button class="action-btn buy-now" onclick="buyNow(${product.product_id})">Buy Now</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -362,26 +362,30 @@
                 });
 
                 // Add this new JavaScript function
-                function addToCart(product) {
+                function addToCart(productId) {
                     fetch('add_to_wishlist.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(product)
+                        body: JSON.stringify({product_id: productId})
                     })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
                             alert('Product added to wishlist successfully!');
                         } else {
-                            alert('Error adding product to wishlist: ' + data.message);
+                            alert(' adding product to wishlist: ' + data.message);
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
                         alert('Error adding product to wishlist');
                     });
+                }
+
+                function buyNow(productId) {
+                    window.location.href = "payment_page.php?product_id=" + productId;
                 }
             </script>
             <style>
@@ -483,11 +487,11 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$11 - $99</div>
-                            <h3 class="mb-3">Bread</h3>
+                            <h3 class="mb-3">modern Art</h3>
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/product-2.jpg" alt="">
+                            <img class="img-fluid" src="img/traditional-8.jpg" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href=""><i class="fa fa-eye text-primary"></i></a>
                             </div>
@@ -498,11 +502,11 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$11 - $99</div>
-                            <h3 class="mb-3">Bread</h3>
+                            <h3 class="mb-3">Traditional Art</h3>
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/coll-2.jpeg" alt="">
+                            <img class="img-fluid" src="img/traditional-7.jpg" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href=""><i class="fa fa-eye text-primary"></i></a>
                             </div>
@@ -513,7 +517,7 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$11 - $99</div>
-                            <h3 class="mb-3">Bread</h3>
+                            <h3 class="mb-3">Fabric Art</h3>
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div class="position-relative mt-auto">
@@ -528,7 +532,7 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$11 - $99</div>
-                            <h3 class="mb-3">Bread</h3>
+                            <h3 class="mb-3">painting</h3>
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div class="position-relative mt-auto">
@@ -543,11 +547,11 @@
                     <div class="product-item d-flex flex-column bg-white rounded overflow-hidden h-100">
                         <div class="text-center p-4">
                             <div class="d-inline-block border border-primary rounded-pill pt-1 px-3 mb-3">$11 - $99</div>
-                            <h4 class="mb-3">Cookies</h4>
+                            <h4 class="mb-3">sculpture art</h4>
                             <span>Tempor erat elitr rebum at clita dolor diam ipsum sit diam amet diam et eos</span>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="img/product-3.jpg" alt="">
+                            <img class="img-fluid" src="img/sculp-9.jpg" alt="">
                             <div class="product-overlay">
                                 <a class="btn btn-lg-square btn-outline-light rounded-circle" href=""><i class="fa fa-eye text-primary"></i></a>
                             </div>
